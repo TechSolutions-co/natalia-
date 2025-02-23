@@ -15,41 +15,40 @@
       height: 100vh;
       margin: 0;
       overflow: hidden;
+      position: relative;
     }
 
-    /* Contenedor del sobre */
-    .sobre {
-      width: 300px;
+    /* Contenedor de la caja de regalo */
+    .caja {
+      width: 200px;
       height: 200px;
-      background-color: #fff; /* Sobre blanco */
+      background-color: #e91e63; /* Color rojo */
       position: relative;
       cursor: pointer;
       transition: transform 0.5s ease;
-      border: 2px solid #ccc; /* Borde gris */
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 1.5em;
-      color: #e91e63; /* Texto rojo */
+      color: #ffd700; /* Texto dorado */
     }
 
-    /* Parte superior del sobre */
-    .sobre::before {
+    /* Moño de la caja */
+    .caja::before {
       content: '';
       position: absolute;
-      top: -50px;
+      top: -30px;
       left: 50%;
-      width: 100px;
-      height: 50px;
-      background-color: #fff;
-      border: 2px solid #ccc;
-      transform: translateX(-50%);
-      clip-path: polygon(0% 0%, 100% 0%, 50% 100%); /* Forma triangular */
+      width: 60px;
+      height: 60px;
+      background-color: #ffd700; /* Color dorado */
+      transform: translateX(-50%) rotate(45deg);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /* Forma de moño */
     }
 
-    /* Efecto de abrir el sobre */
-    .sobre.abierto {
+    /* Efecto de abrir la caja */
+    .caja.abierto {
       transform: translateY(-100px);
     }
 
@@ -73,8 +72,8 @@
       transition: opacity 0.5s ease, transform 0.5s ease; /* Transición suave */
     }
 
-    /* Mostrar la carta cuando el sobre está abierto */
-    .sobre.abierto + .carta {
+    /* Mostrar la carta cuando la caja está abierta */
+    .caja.abierto + .carta {
       display: block;
       opacity: 1; /* Hacer visible la carta */
       transform: translate(-50%, -60%); /* Mover ligeramente hacia arriba */
@@ -88,26 +87,24 @@
       text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Sombra para resaltar el texto */
     }
 
-    /* Animación de globos */
-    .animacion {
-      font-size: 2em;
+    /* Animación de confeti */
+    .confeti {
       position: absolute;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: flotar 5s infinite;
+      width: 10px;
+      height: 10px;
+      background-color: #ffd700; /* Color dorado */
+      animation: caer 5s linear infinite;
     }
 
-    @keyframes flotar {
-      0% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -20px); }
-      100% { transform: translate(-50%, 0); }
+    @keyframes caer {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <!-- Sobre -->
-  <div class="sobre" id="sobre">¡Feliz Cumpleaños!</div>
+  <!-- Caja de regalo -->
+  <div class="caja" id="caja">¡Abrir!</div>
 
   <!-- Carta -->
   <div class="carta">
@@ -118,16 +115,18 @@
       Con cariño,<br>
       Pues yo 😊
     </p>
-    <div class="animacion">🎈</div>
   </div>
 
+  <!-- Confeti -->
+  <div id="confeti-container"></div>
+
   <script>
-    // Abrir el sobre al hacer clic
-    const sobre = document.getElementById('sobre');
+    // Abrir la caja al hacer clic
+    const caja = document.getElementById('caja');
     const carta = document.querySelector('.carta');
 
-    sobre.addEventListener('click', () => {
-      sobre.classList.toggle('abierto');
+    caja.addEventListener('click', () => {
+      caja.classList.toggle('abierto');
       carta.style.display = 'block';
       setTimeout(() => {
         carta.style.opacity = '1';
@@ -135,24 +134,22 @@
       }, 10); // Pequeño retraso para activar la transición
     });
 
-    // Agregar globos animados
-    const contenedor = document.querySelector('.carta');
+    // Generar confeti
+    const confetiContainer = document.getElementById('confeti-container');
 
-    function crearGlobo() {
-      const globo = document.createElement('div');
-      globo.innerHTML = '🎈';
-      globo.style.position = 'absolute';
-      globo.style.left = Math.random() * 100 + '%';
-      globo.style.fontSize = Math.random() * 30 + 20 + 'px';
-      globo.style.animation = `flotar ${Math.random() * 5 + 3}s infinite`;
-      contenedor.appendChild(globo);
+    function crearConfeti() {
+      const confeti = document.createElement('div');
+      confeti.classList.add('confeti');
+      confeti.style.left = Math.random() * 100 + 'vw';
+      confeti.style.animationDuration = Math.random() * 3 + 2 + 's';
+      confetiContainer.appendChild(confeti);
 
       setTimeout(() => {
-        globo.remove();
-      }, 8000); // Eliminar el globo después de 8 segundos
+        confeti.remove();
+      }, 5000); // Eliminar el confeti después de 5 segundos
     }
 
-    setInterval(crearGlobo, 1000); // Crear un globo cada segundo
+    setInterval(crearConfeti, 100); // Crear confeti cada 100ms
   </script>
 </body>
 </html>
