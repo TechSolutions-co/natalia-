@@ -21,25 +21,31 @@
     .sobre {
       width: 300px;
       height: 200px;
-      background-color: #e91e63;
+      background-color: #fff; /* Sobre blanco */
       position: relative;
       cursor: pointer;
       transition: transform 0.5s ease;
-      border: 2px solid #c2185b; /* Borde más marcado */
+      border: 2px solid #ccc; /* Borde gris */
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      color: #e91e63; /* Texto rojo */
     }
 
     /* Parte superior del sobre */
     .sobre::before {
       content: '';
       position: absolute;
-      top: -100px;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 150px solid transparent;
-      border-right: 150px solid transparent;
-      border-bottom: 100px solid #c2185b; /* Color más oscuro para resaltar */
+      top: -50px;
+      left: 50%;
+      width: 100px;
+      height: 50px;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      transform: translateX(-50%);
+      clip-path: polygon(0% 0%, 100% 0%, 50% 100%); /* Forma triangular */
     }
 
     /* Efecto de abrir el sobre */
@@ -62,27 +68,24 @@
       left: 50%;
       transform: translate(-50%, -50%);
       display: none;
-      color: #fff; /* Color del texto para que contraste con la imagen */
+      color: #000; /* Color del texto en negro */
+      opacity: 0; /* Inicialmente invisible */
+      transition: opacity 0.5s ease, transform 0.5s ease; /* Transición suave */
     }
 
     /* Mostrar la carta cuando el sobre está abierto */
     .sobre.abierto + .carta {
       display: block;
+      opacity: 1; /* Hacer visible la carta */
+      transform: translate(-50%, -60%); /* Mover ligeramente hacia arriba */
     }
 
     /* Estilos del mensaje */
-    h1 {
-      color: #fff; /* Texto blanco para que contraste */
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar el texto */
-    }
-
     p {
       font-size: 1.2em;
       line-height: 1.6;
-      color: #fff; /* Texto blanco para que contraste */
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar el texto */
+      color: #000; /* Texto negro */
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Sombra para resaltar el texto */
     }
 
     /* Animación de globos */
@@ -104,7 +107,7 @@
 </head>
 <body>
   <!-- Sobre -->
-  <div class="sobre" id="sobre"></div>
+  <div class="sobre" id="sobre">¡Feliz Cumpleaños!</div>
 
   <!-- Carta -->
   <div class="carta">
@@ -126,6 +129,10 @@
     sobre.addEventListener('click', () => {
       sobre.classList.toggle('abierto');
       carta.style.display = 'block';
+      setTimeout(() => {
+        carta.style.opacity = '1';
+        carta.style.transform = 'translate(-50%, -60%)';
+      }, 10); // Pequeño retraso para activar la transición
     });
 
     // Agregar globos animados
