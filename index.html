@@ -32,17 +32,31 @@
       align-items: center;
       font-size: 1.5em;
       color: #ffd700; /* Texto dorado */
-      border-radius: 10px;
-      text-align: center;
     }
 
     /* Moño de la caja */
-    .moño {
-      width: 100%;
-      height: 40px;
-      background-color: #ffd700;
+    .caja::before,
+    .caja::after {
+      content: '';
       position: absolute;
-      top: -20px;
+      background-color: #ffd700; /* Color dorado */
+    }
+
+    .caja::before {
+      top: -30px;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      transform: translateX(-50%) rotate(45deg);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /* Forma de moño */
+    }
+
+    .caja::after {
+      top: 10px;
+      left: 50%;
+      width: 80px;
+      height: 20px;
+      transform: translateX(-50%);
       border-radius: 10px;
     }
 
@@ -53,9 +67,9 @@
 
     /* Contenedor de la carta */
     .carta {
-      background-image: url('https://media.istockphoto.com/id/1384228187/es/vector/tarjeta-de-feliz-cumplea%C3%B1os-lindo-tres-divertidos-gato-gatito-feliz-celebrando-la-fiesta-de.jpg?s=612x612&w=0&k=20&c=V1uTX6IaOGpA8VwiE7tLcyvQWzeZZjG4zV9xWLiKUSI=');
-      background-size: cover;
-      background-position: center;
+      background-image: url('https://media.istockphoto.com/id/1384228187/es/vector/tarjeta-de-feliz-cumplea%C3%B1os-lindo-tres-divertidos-gato-gatito-feliz-celebrando-la-fiesta-de.jpg?s=612x612&w=0&k=20&c=V1uTX6IaOGpA8VwiE7tLcyvQWzeZZjG4zV9xWLiKUSI='); /* Imagen de fondo */
+      background-size: cover; /* Ajustar la imagen al tamaño de la carta */
+      background-position: center; /* Centrar la imagen */
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -65,24 +79,24 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      visibility: hidden; /* Ocultar inicialmente */
+      opacity: 0; /* Inicialmente invisible */
+      transition: opacity 0.5s ease, transform 0.5s ease; /* Transición suave */
     }
 
     /* Mostrar la carta cuando la caja está abierta */
     .caja.abierto + .carta {
-      visibility: visible;
-      opacity: 1;
-      transform: translate(-50%, -60%);
+      visibility: visible; /* Hacer visible la carta */
+      opacity: 1; /* Hacer visible la carta */
+      transform: translate(-50%, -60%); /* Mover ligeramente hacia arriba */
     }
 
     /* Estilos del mensaje */
     p {
       font-size: 1.2em;
       line-height: 1.6;
-      color: #000;
-      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+      color: #000; /* Texto negro */
+      text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8); /* Sombra para resaltar el texto */
     }
 
     /* Animación de confeti */
@@ -90,15 +104,13 @@
       position: absolute;
       width: 10px;
       height: 10px;
-      background-color: #ffd700;
+      background-color: #ffd700; /* Color dorado */
       animation: caer 5s linear infinite;
-      border-radius: 50%;
-      opacity: 0.8;
     }
 
     @keyframes caer {
       0% { transform: translateY(-100vh) rotate(0deg); }
-      100% { transform: translateY(100vh) rotate(720deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
     }
 
     /* Estilos para dispositivos móviles */
@@ -111,25 +123,27 @@
 
       .carta {
         max-width: 90%;
-        font-size: 1em;
         padding: 15px;
       }
 
       p {
         font-size: 1em;
       }
+
+      /* Reducir la cantidad de confeti en móviles */
+      .confeti {
+        width: 8px;
+        height: 8px;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Caja de regalo -->
-  <div class="caja" id="caja">
-    <div class="moño"></div>
-    ¡Abrir!
-  </div>
+  <div class="caja" id="caja">¡Abrir!</div>
 
   <!-- Carta -->
-  <div class="carta" id="carta">
+  <div class="carta">
     <p>
       Querida Natalia,<br><br>
       En este día tan especial, quiero desearte un feliz cumpleaños lleno de amor, alegría y momentos inolvidables. Eres una persona increíble, y estoy muy agradecido por conocerte y compartir momentos contigo. Que este nuevo año esté lleno de bendiciones, éxitos y sueños cumplidos.<br><br>
@@ -139,48 +153,46 @@
     </p>
   </div>
 
-  <!-- Contenedor de confeti -->
+  <!-- Confeti -->
   <div id="confeti-container"></div>
 
   <script>
+    // Abrir/cerrar la caja al hacer clic
     const caja = document.getElementById('caja');
-    const carta = document.getElementById('carta');
+    const carta = document.querySelector('.carta');
 
     caja.addEventListener('click', () => {
+      caja.classList.toggle('abierto');
       if (caja.classList.contains('abierto')) {
-        caja.classList.remove('abierto');
+        carta.style.visibility = 'visible';
+        carta.style.opacity = '1';
+        carta.style.transform = 'translate(-50%, -60%)';
+      } else {
         carta.style.visibility = 'hidden';
         carta.style.opacity = '0';
-      } else {
-        caja.classList.add('abierto');
-        carta.style.visibility = 'visible';
-        setTimeout(() => {
-          carta.style.opacity = '1';
-          carta.style.transform = 'translate(-50%, -60%)';
-        }, 10);
+        carta.style.transform = 'translate(-50%, -50%)';
       }
     });
 
     // Generar confeti
     const confetiContainer = document.getElementById('confeti-container');
+    const colores = ['#ffd700', '#e91e63', '#4caf50', '#2196f3', '#9c27b0']; // Colores variados
 
     function crearConfeti() {
-      const colores = ['#ffd700', '#ff4081', '#ff9800', '#8bc34a', '#3f51b5'];
       const confeti = document.createElement('div');
       confeti.classList.add('confeti');
       confeti.style.left = Math.random() * 100 + 'vw';
-      confeti.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
-      confeti.style.animationDuration = Math.random() * 3 + 2 + 's';
+      confeti.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)]; // Color aleatorio
+      confeti.style.animationDuration = Math.random() * 3 + 2 + 's'; // Velocidad aleatoria
+      confeti.style.transform = `rotate(${Math.random() * 360}deg)`; // Rotación aleatoria
       confetiContainer.appendChild(confeti);
 
       setTimeout(() => {
         confeti.remove();
-      }, 5000);
+      }, 5000); // Eliminar el confeti después de 5 segundos
     }
 
-    // Disminuir confeti en móviles para mejor rendimiento
-    const intervaloConfeti = window.innerWidth < 600 ? 300 : 100;
-    setInterval(crearConfeti, intervaloConfeti);
+    setInterval(crearConfeti, 100); // Crear confeti cada 100ms
   </script>
 </body>
 </html>
