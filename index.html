@@ -54,9 +54,9 @@
       max-width: 500px;
       text-align: center;
       position: absolute;
-      top: 100%;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       display: none;
     }
 
@@ -115,8 +115,11 @@
   <script>
     // Abrir el sobre al hacer clic
     const sobre = document.getElementById('sobre');
+    const carta = document.querySelector('.carta');
+
     sobre.addEventListener('click', () => {
       sobre.classList.toggle('abierto');
+      carta.style.display = 'block';
     });
 
     // Agregar globos animados
