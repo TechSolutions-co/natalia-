@@ -8,7 +8,7 @@
     /* Estilos generales */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #f9f9f9;
+      background-color: #e1bee7; /* Fondo pastel morado */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,6 +25,8 @@
       position: relative;
       cursor: pointer;
       transition: transform 0.5s ease;
+      border: 2px solid #c2185b; /* Borde más marcado */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para resaltar */
     }
 
     /* Parte superior del sobre */
@@ -37,7 +39,7 @@
       height: 0;
       border-left: 150px solid transparent;
       border-right: 150px solid transparent;
-      border-bottom: 100px solid #e91e63;
+      border-bottom: 100px solid #c2185b; /* Color más oscuro para resaltar */
     }
 
     /* Efecto de abrir el sobre */
@@ -47,7 +49,9 @@
 
     /* Contenedor de la carta */
     .carta {
-      background-color: #fff;
+      background-image: url('https://media.istockphoto.com/id/1384228187/es/vector/tarjeta-de-feliz-cumplea%C3%B1os-lindo-tres-divertidos-gato-gatito-feliz-celebrando-la-fiesta-de.jpg?s=612x612&w=0&k=20&c=V1uTX6IaOGpA8VwiE7tLcyvQWzeZZjG4zV9xWLiKUSI='); /* Imagen de fondo */
+      background-size: cover; /* Ajustar la imagen al tamaño de la carta */
+      background-position: center; /* Centrar la imagen */
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -58,6 +62,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       display: none;
+      color: #fff; /* Color del texto para que contraste con la imagen */
     }
 
     /* Mostrar la carta cuando el sobre está abierto */
@@ -67,15 +72,17 @@
 
     /* Estilos del mensaje */
     h1 {
-      color: #e91e63;
+      color: #fff; /* Texto blanco para que contraste */
       font-size: 2.5em;
       margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar el texto */
     }
 
     p {
       font-size: 1.2em;
       line-height: 1.6;
-      color: #333;
+      color: #fff; /* Texto blanco para que contraste */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para resaltar el texto */
     }
 
     /* Animación de globos */
